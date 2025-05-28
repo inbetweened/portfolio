@@ -12,7 +12,6 @@ import Hero from '../components/Hero';
 import Work from '../components/Work';
 import About from '../components/About';
 import Contact from '../components/Contact';
-import '../styles/globals.css';
 import { animateCards, parallaxEffects } from '../animations/gsapAnimations';
 
 export default function Home() {
