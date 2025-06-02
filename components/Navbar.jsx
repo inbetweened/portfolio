@@ -52,7 +52,7 @@ export default function Navbar() {
   return (
     <>
       <nav className={styles.nav}>
-        <div className={styles.logo}>Dani</div>
+        <a href="/" className={styles.logo}>Dani</a>
         <div className={styles.burger} onClick={() => setMenuOpen(!menuOpen)}>
           <div ref={(el) => (burgerLines.current[0] = el)} />
           <div ref={(el) => (burgerLines.current[1] = el)} />
