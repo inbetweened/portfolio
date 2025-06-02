@@ -1,80 +1,84 @@
-// pages/work.jsx
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import Navbar from '../components/Navbar';
-import SeoHead from '../components/SeoHead';
-import styles from '../styles/WorkPage.module.css';
+import styles from '../styles/Work.module.css';
 import { useRouter } from 'next/router';
-
-if (typeof window !== 'undefined' && gsap && ScrollTrigger) {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-const projects = [
-  {
-    title: 'Projekt Eins',
-    description: 'Kurzer Text über Projekt Eins.',
-    slug: 'projekt-eins',
-    color: '#FFC6C7'
-  },
-  {
-    title: 'Projekt Zwei',
-    description: 'Kurzer Text über Projekt Zwei.',
-    slug: 'projekt-zwei',
-    color: '#C6F1FF'
-  },
-  {
-    title: 'Projekt Drei',
-    description: 'Kurzer Text über Projekt Drei.',
-    slug: 'projekt-drei',
-    color: '#D4FFC6'
-  }
-];
 
 export default function WorkPage() {
   const containerRef = useRef(null);
-  const panelsRef = useRef([]);
+  const cardsRef = useRef([]);
   const router = useRouter();
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.to(panelsRef.current, {
-        xPercent: -100 * (projects.length - 1),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          scrub: 1,
-          snap: 1 / (projects.length - 1),
-          end: () => `+=${containerRef.current.offsetWidth}`
-        }
-      });
-    }, containerRef);
+    gsap.registerPlugin(ScrollTrigger);
 
-    return () => ctx.revert();
+    const sections = cardsRef.current;
+    const totalWidth = containerRef.current.scrollWidth - window.innerWidth;
+
+    gsap.to(containerRef.current, {
+      x: () => `-${totalWidth}px`,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: () => `+=${totalWidth}`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+      },
+    });
+
+    sections.forEach((card, i) => {
+      gsap.fromTo(
+        card,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          scrollTrigger: {
+            trigger: card,
+            containerAnimation: ScrollTrigger.getById('horizontal-scroll'),
+            start: 'left center',
+            toggleActions: 'play none none reset',
+          },
+        }
+      );
+    });
   }, []);
 
+  const projects = [
+    {
+      title: 'Projekt Eins',
+      description: 'Beschreibung für Projekt Eins',
+      slug: 'projekt-eins',
+    },
+    {
+      title: 'Projekt Zwei',
+      description: 'Beschreibung für Projekt Zwei',
+      slug: 'projekt-zwei',
+    },
+    {
+      title: 'Projekt Drei',
+      description: 'Beschreibung für Projekt Drei',
+      slug: 'projekt-drei',
+    },
+  ];
+
   return (
-    <>
-      <SeoHead title="Work – Daniel" description="Showcase meiner Projekte" />
-      <Navbar />
-      <section className={styles.container} ref={containerRef}>
-        <div className={styles.inner}>
-          {projects.map((project, i) => (
-            <div
-              key={i}
-              ref={(el) => (panelsRef.current[i] = el)}
-              className={styles.panel}
-              style={{ backgroundColor: project.color }}
-              onClick={() => router.push(`/projects/${project.slug}`)}
-            >
-              <h2>{project.title}</h2>
-              <p>{project.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-    </>
+    <section className={styles.scrollWrapper}>
+      <div ref={containerRef} className={styles.horizontalScroll}>
+        {projects.map((project, i) => (
+          <div
+            key={project.slug}
+            className={styles.card}
+            ref={(el) => (cardsRef.current[i] = el)}
+            onClick={() => router.push(`/projects/${project.slug}`)}
+          >
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
