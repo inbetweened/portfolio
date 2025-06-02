@@ -1,5 +1,8 @@
 .workSection {
+  height: 100vh;
   padding: 2rem;
+  display: flex;
+  align-items: center;
   overflow: hidden;
 }
 
@@ -7,27 +10,32 @@
   display: flex;
   gap: 2rem;
   overflow-x: scroll;
-  scroll-behavior: smooth;
-  padding-bottom: 1rem;
-  scrollbar-width: none; /* Firefox */
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+
 .scrollContainer::-webkit-scrollbar {
-  display: none; /* Chrome */
+  display: none;
 }
 
 .card {
-  flex: 0 0 auto;
-  width: 570px;
+  scroll-snap-align: start;
+  min-width: 570px;
   height: 320px;
-  border-radius: 16px;
-  background-color: #f0f0f0;
+  background: #f4f4f4;
+  border-radius: 20px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
   overflow: hidden;
-  position: relative;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
+
 .card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .cardImage {
@@ -39,5 +47,5 @@
 .cardTitle {
   padding: 1rem;
   font-size: 1.2rem;
-  text-align: center;
+  font-weight: bold;
 }
