@@ -1,10 +1,13 @@
+import Navbar from '@/components/Navbar';
+
 export default function Work() {
   return (
-    <div className="p-10">
-      <h1 className="text-3xl font-bold mb-4">Work</h1>
-      <p>
-        Showcase of your selected projects – can be cards, images or embedded videos.
-      </p>
+    <div className="min-h-screen bg-white text-black font-sans">
+      <Navbar />
+      <main className="p-6 pt-24 text-center">
+        <h1 className="text-4xl font-bold mb-4">Work</h1>
+        <p>Here’s a showcase of my selected projects and creative work.</p>
+      </main>
     </div>
   );
 }
