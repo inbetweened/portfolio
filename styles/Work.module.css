@@ -1,11 +1,7 @@
 .workSection {
   padding: 2rem;
-  height: 90vh; /* erhöht die Section-Höhe */
-  display: flex;
-  align-items: center;
   overflow: hidden;
 }
-
 
 .scrollContainer {
   display: flex;
