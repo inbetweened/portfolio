@@ -1,14 +1,17 @@
-import { useState, useRef, useEffect } from 'react';
+import { forwardRef, useImperativeHandle, useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import AnimatedLink from './AnimatedLink';
 import styles from '../styles/Navbar.module.css';
 
-export default function Navbar() {
+const Navbar = forwardRef((_, ref) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const burgerLines = useRef([]);
   const linksRef = useRef([]);
-  const discoverRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    openMenu: () => setMenuOpen(true),
+  }));
 
   useEffect(() => {
     if (menuOpen) {
@@ -24,11 +27,6 @@ export default function Navbar() {
           ease: 'power3.out',
           delay: 0.2,
         }
-      );
-      gsap.fromTo(
-        discoverRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, delay: 0.6 }
       );
       gsap.to(burgerLines.current[0], { rotate: 45, y: 8, duration: 0.3 });
       gsap.to(burgerLines.current[1], { opacity: 0, duration: 0.3 });
@@ -64,17 +62,9 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <button
-          ref={discoverRef}
-          className={styles.discoverButton}
-          onClick={() => {
-            setMenuOpen(false);
-            // Optional: z.B. scrollTo Hero Section oder open modal
-          }}
-        >
-          Entdecke mehr →
-        </button>
       </div>
     </>
   );
-}
+});
+
+export default Navbar;
