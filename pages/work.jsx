@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import styles from '../styles/Work.module.css';
-import Image from 'next/image';
+import Navbar from '../components/Navbar';
+import SeoHead from '../components/SeoHead';
 
 export default function WorkPage() {
   const cardsRef = useRef([]);
@@ -13,59 +14,37 @@ export default function WorkPage() {
       {
         x: 0,
         opacity: 1,
-        duration: 0.8,
         stagger: 0.2,
+        duration: 0.8,
         ease: 'power3.out',
       }
     );
   }, []);
 
   const projects = [
-    {
-      title: 'Project One',
-      description: 'Creative campaign design',
-      image: '/project1.jpg',
-      link: '/projects/one',
-    },
-    {
-      title: 'Project Two',
-      description: 'Web animation showcase',
-      image: '/project2.jpg',
-      link: '/projects/two',
-    },
-    {
-      title: 'Project Three',
-      description: 'Interactive UI concept',
-      image: '/project3.jpg',
-      link: '/projects/three',
-    },
+    { title: 'Projekt A', image: '/images/project-a.jpg' },
+    { title: 'Projekt B', image: '/images/project-b.jpg' },
+    { title: 'Projekt C', image: '/images/project-c.jpg' },
   ];
 
   return (
-    <section className={styles.workWrapper}>
-      <h2 className={styles.heading}>My Work</h2>
-      <div className={styles.horizontalScroll}>
-        {projects.map((project, index) => (
-          <a
-            key={project.title}
-            href={project.link}
-            className={styles.card}
-            ref={(el) => (cardsRef.current[index] = el)}
-          >
-            <Image
-              src={project.image}
-              alt={project.title}
-              width={570}
-              height={320}
-              className={styles.image}
-            />
-            <div className={styles.cardContent}>
-              <h3>{project.title}</h3>
-              <p>{project.description}</p>
+    <>
+      <SeoHead title="Work – Daniel" description="My selected works and projects." />
+      <Navbar />
+      <section className={styles.workSection}>
+        <div className={styles.scrollContainer}>
+          {projects.map((project, index) => (
+            <div
+              key={index}
+              className={styles.card}
+              ref={(el) => (cardsRef.current[index] = el)}
+            >
+              <img src={project.image} alt={project.title} className={styles.cardImage} />
+              <h3 className={styles.cardTitle}>{project.title}</h3>
             </div>
-          </a>
-        ))}
-      </div>
-    </section>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
