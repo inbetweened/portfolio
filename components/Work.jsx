@@ -1,18 +1,13 @@
-import styles from '../styles/Work.module.css';
+import SeoHead from '../components/SeoHead';
+import Navbar from '../components/Navbar';
+import Work from '../components/Work';
 
-export default function Work({ cardsRef }) {
+export default function WorkPage() {
   return (
-    <section id="work" className={styles.work}>
-      <h2 className={styles.heading}>Work</h2>
-      <div className={styles.grid}>
-        {[0, 1, 2].map((_, index) => (
-          <div
-            key={index}
-            ref={(el) => (cardsRef.current[index] = el)}
-            className={styles.card}
-          />
-        ))}
-      </div>
-    </section>
+    <>
+      <SeoHead title="Work – Daniel" description="A collection of my favorite projects and case studies." />
+      <Navbar />
+      <Work />
+    </>
   );
 }
