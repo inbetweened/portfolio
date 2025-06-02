@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRef, useEffect, useState } from 'react';
-import Navbar from '@/components/Navbar';
+import Navbar from '../components/Navbar';
 import gsap from 'gsap';
 
 export default function Home() {
