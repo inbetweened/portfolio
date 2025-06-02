@@ -1,32 +1,33 @@
 .workSection {
-  padding: 4rem 2rem 2rem; /* oben mehr padding */
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
+  padding: 2rem;
+  overflow: hidden;
 }
-
 
 .scrollContainer {
   display: flex;
   gap: 2rem;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  scrollbar-width: none; /* Firefox */
+}
+.scrollContainer::-webkit-scrollbar {
+  display: none; /* Chrome */
 }
 
 .card {
-  min-width: 570px;
+  flex: 0 0 auto;
+  width: 570px;
   height: 320px;
-  background: #f5f5f5;
   border-radius: 16px;
+  background-color: #f0f0f0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
   overflow: hidden;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s ease;
 }
-
 .card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transform: scale(1.05);
 }
 
 .cardImage {
@@ -37,7 +38,6 @@
 
 .cardTitle {
   padding: 1rem;
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.2rem;
   text-align: center;
 }
