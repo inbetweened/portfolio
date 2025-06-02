@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from '../styles/Work.module.css';
 import Navbar from '../components/Navbar';
 import SeoHead from '../components/SeoHead';
@@ -9,31 +9,47 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function WorkPage() {
   const cardsRef = useRef([]);
+  const scrollContainerRef = useRef(null);
 
   useEffect(() => {
-    cardsRef.current.forEach((card, i) => {
-      gsap.fromTo(card,
+    // GSAP animation for each card
+    if (cardsRef.current.length > 0) {
+      gsap.fromTo(
+        cardsRef.current,
         { y: 100, opacity: 0 },
         {
           y: 0,
           opacity: 1,
+          stagger: 0.2,
+          duration: 0.6,
+          ease: 'power2.out',
           scrollTrigger: {
-            trigger: card,
-            start: 'left center',
-            horizontal: true,
-            scroller: '.scrollContainer',
+            trigger: scrollContainerRef.current,
+            start: 'top 80%',
+            scrub: false,
           },
-          duration: 0.8,
-          ease: 'power3.out',
-        });
-    });
+        }
+      );
+    }
+
+    // Horizontal scroll with mousewheel
+    const container = scrollContainerRef.current;
+    const handleWheel = (e) => {
+      if (container) {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY * 2.5;
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
   }, []);
 
   const projects = [
-    { title: 'Projekt A', image: '/images/project-a.jpg' },
-    { title: 'Projekt B', image: '/images/project-b.jpg' },
-    { title: 'Projekt C', image: '/images/project-c.jpg' },
-    { title: 'Projekt D', image: '/images/project-d.jpg' },
+    { title: 'Projekt A', image: 'https://via.placeholder.com/570x320?text=Projekt+A' },
+    { title: 'Projekt B', image: 'https://via.placeholder.com/570x320?text=Projekt+B' },
+    { title: 'Projekt C', image: 'https://via.placeholder.com/570x320?text=Projekt+C' },
+    { title: 'Projekt D', image: 'https://via.placeholder.com/570x320?text=Projekt+D' },
   ];
 
   return (
@@ -41,7 +57,7 @@ export default function WorkPage() {
       <SeoHead title="Work – Daniel" description="My selected works and projects." />
       <Navbar />
       <section className={styles.workSection}>
-        <div className={styles.scrollContainer}>
+        <div className={styles.scrollContainer} ref={scrollContainerRef}>
           {projects.map((project, index) => (
             <div
               key={index}
