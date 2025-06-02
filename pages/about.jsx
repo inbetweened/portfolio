@@ -1,13 +1,13 @@
-import Navbar from '../components/Navbar';
+import SeoHead from '@/components/SeoHead';
+import Navbar from '@/components/Navbar';
+import About from '@/components/About';
 
-export default function About() {
+export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white text-black font-sans">
+    <>
+      <SeoHead title="About Me – Daniel" description="Who I am and what drives my creative work." />
       <Navbar />
-      <main className="p-6 pt-24 text-center">
-        <h1 className="text-4xl font-bold mb-4">About Me</h1>
-        <p>Hi, I’m Daniel. I create motion design and animated experiences that breathe life into digital storytelling.</p>
-      </main>
-    </div>
+      <About />
+    </>
   );
 }
