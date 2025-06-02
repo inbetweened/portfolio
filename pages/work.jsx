@@ -1,71 +1,71 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import styles from '../styles/Work.module.css';
-import Navbar from '../components/Navbar';
-import SeoHead from '../components/SeoHead';
+import Image from 'next/image';
 
 export default function WorkPage() {
   const cardsRef = useRef([]);
 
   useEffect(() => {
-    cardsRef.current.forEach((card, i) => {
-      gsap.fromTo(
-        card,
-        { x: 100, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.8,
-          delay: i * 0.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 90%',
-          },
-        }
-      );
-    });
+    gsap.fromTo(
+      cardsRef.current,
+      { x: 100, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out',
+      }
+    );
   }, []);
 
-  const cards = [
+  const projects = [
     {
       title: 'Project One',
+      description: 'Creative campaign design',
       image: '/project1.jpg',
-      description: 'A creative project exploring dynamic visuals and interaction.'
+      link: '/projects/one',
     },
     {
       title: 'Project Two',
+      description: 'Web animation showcase',
       image: '/project2.jpg',
-      description: 'An experimental build focusing on animation and style.'
+      link: '/projects/two',
     },
     {
       title: 'Project Three',
+      description: 'Interactive UI concept',
       image: '/project3.jpg',
-      description: 'Merging storytelling and clean UI with motion.'
-    }
+      link: '/projects/three',
+    },
   ];
 
   return (
-    <>
-      <SeoHead title="Work – Daniel" description="A showcase of past creative projects and designs." />
-      <Navbar />
-      <section className={styles.horizontalScroll}>
-        <div className={styles.scrollContainer}>
-          {cards.map((card, index) => (
-            <div
-              key={index}
-              className={styles.card}
-              ref={(el) => (cardsRef.current[index] = el)}
-            >
-              <img src={card.image} alt={card.title} className={styles.image} />
-              <div className={styles.textContainer}>
-                <h3 className={styles.cardTitle}>{card.title}</h3>
-                <p className={styles.cardDescription}>{card.description}</p>
-              </div>
+    <section className={styles.workWrapper}>
+      <h2 className={styles.heading}>My Work</h2>
+      <div className={styles.horizontalScroll}>
+        {projects.map((project, index) => (
+          <a
+            key={project.title}
+            href={project.link}
+            className={styles.card}
+            ref={(el) => (cardsRef.current[index] = el)}
+          >
+            <Image
+              src={project.image}
+              alt={project.title}
+              width={570}
+              height={320}
+              className={styles.image}
+            />
+            <div className={styles.cardContent}>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
             </div>
-          ))}
-        </div>
-      </section>
-    </>
+          </a>
+        ))}
+      </div>
+    </section>
   );
 }
