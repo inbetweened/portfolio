@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import styles from '../styles/Work.module.css';
 import Navbar from '../components/Navbar';
 import SeoHead from '../components/SeoHead';
@@ -11,21 +11,22 @@ export default function WorkPage() {
   const cardsRef = useRef([]);
 
   useEffect(() => {
-    gsap.fromTo(
-      cardsRef.current,
-      { y: 100, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        stagger: 0.2,
-        duration: 0.6,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: `.${styles.scrollContainer}`,
-          start: 'top 80%',
-        }
-      }
-    );
+    cardsRef.current.forEach((card, i) => {
+      gsap.fromTo(card,
+        { y: 100, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          scrollTrigger: {
+            trigger: card,
+            start: 'left center',
+            horizontal: true,
+            scroller: '.scrollContainer',
+          },
+          duration: 0.8,
+          ease: 'power3.out',
+        });
+    });
   }, []);
 
   const projects = [
