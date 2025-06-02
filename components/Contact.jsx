@@ -1,13 +1,12 @@
-import SeoHead from '../components/SeoHead';
-import Navbar from '../components/Navbar';
-import Contact from '../components/Contact';
+import styles from '../styles/Contact.module.css';
 
-export default function ContactPage() {
+export default function Contact({ contactRef }) {
   return (
-    <>
-      <SeoHead title="Contact – Daniel" description="Let's get in touch!" />
-      <Navbar />
-      <Contact />
-    </>
+    <section id="contact" ref={contactRef} className={styles.contact}>
+      <h2 className={styles.heading}>Contact</h2>
+      <p className={styles.text}>
+        Get in touch via <a href="mailto:hi@bydaniel.co">hi@bydaniel.co</a>
+      </p>
+    </section>
   );
 }
