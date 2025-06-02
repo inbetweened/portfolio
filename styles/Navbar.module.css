@@ -32,14 +32,16 @@
 .menu {
   position: fixed;
   top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100%;
-  background: #111;
+  right: 0;
+  height: 100%;
+  width: 66.6667%; /* entspricht w-2/3 */
+  background: linear-gradient(135deg, #ff0055, #ff7e5f);
   color: white;
-  padding: 5rem 2rem;
-  transform: translateX(-100%);
-  z-index: 90;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 6rem;
 }
 
 .menu ul {
