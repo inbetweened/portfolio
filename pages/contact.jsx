@@ -1,13 +1,13 @@
+import SeoHead from '../components/SeoHead';
 import Navbar from '../components/Navbar';
+import Contact from '../components/Contact';
 
-export default function Contact() {
+export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-white text-black font-sans">
+    <>
+      <SeoHead title="Contact – Daniel" description="Let's get in touch!" />
       <Navbar />
-      <main className="p-6 pt-24 text-center">
-        <h1 className="text-4xl font-bold mb-4">Contact</h1>
-        <p>Reach out at <a href="mailto:hi@bydaniel.co" className="underline">hi@bydaniel.co</a></p>
-      </main>
-    </div>
+      <Contact />
+    </>
   );
 }
