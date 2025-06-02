@@ -8,7 +8,7 @@ export default function WorkPage() {
   const cardsRef = useRef([]);
 
   useEffect(() => {
-    // Card Entrance Animation
+    // GSAP Animation on load
     gsap.fromTo(
       cardsRef.current,
       { x: 100, opacity: 0 },
@@ -21,7 +21,7 @@ export default function WorkPage() {
       }
     );
 
-    // Global Horizontal Scroll via Wheel
+    // Global wheel → horizontal scroll
     const container = document.querySelector(`.${styles.scrollContainer}`);
     const handleWheel = (e) => {
       if (container) {
