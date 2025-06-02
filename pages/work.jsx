@@ -25,6 +25,7 @@ export default function WorkPage() {
     { title: 'Projekt A', image: '/images/project-a.jpg' },
     { title: 'Projekt B', image: '/images/project-b.jpg' },
     { title: 'Projekt C', image: '/images/project-c.jpg' },
+    { title: 'Projekt D', image: '/images/project-d.jpg' },
   ];
 
   return (
