@@ -1,40 +1,31 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from '../styles/Work.module.css';
 import Navbar from '../components/Navbar';
 import SeoHead from '../components/SeoHead';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function WorkPage() {
   const cardsRef = useRef([]);
 
   useEffect(() => {
-    // GSAP entry animation
     gsap.fromTo(
       cardsRef.current,
-      { x: 100, opacity: 0 },
+      { y: 100, opacity: 0 },
       {
-        x: 0,
+        y: 0,
         opacity: 1,
         stagger: 0.2,
-        duration: 0.8,
-        ease: 'power3.out',
+        duration: 0.6,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: `.${styles.scrollContainer}`,
+          start: 'top 80%',
+        }
       }
     );
-
-    // Horizontal scroll with speed ramping
-    const container = document.querySelector(`.${styles.scrollContainer}`);
-    const handleWheel = (e) => {
-      if (container) {
-        e.preventDefault();
-        container.scrollLeft += e.deltaY * 2.5; // ⬅️ Speed multiplier
-      }
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-    };
   }, []);
 
   const projects = [
