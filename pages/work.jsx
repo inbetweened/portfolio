@@ -12,24 +12,7 @@ export default function WorkPage() {
   const cardsRef = useRef([]);
 
   useEffect(() => {
-    // GSAP horizontales Scrollen
-    const sections = gsap.utils.toArray('.workCard');
-    const totalWidth = containerRef.current.scrollWidth;
-
-    gsap.to(containerRef.current, {
-      x: () => -(totalWidth - window.innerWidth),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top top',
-        end: () => `+=${totalWidth}`,
-        scrub: true,
-        pin: true,
-        anticipatePin: 1,
-      },
-    });
-
-    // Card-Animationen
+    // GSAP Animationen für Cards beim Scrollen
     cardsRef.current.forEach((card, i) => {
       gsap.fromTo(card, {
         opacity: 0,
@@ -44,8 +27,6 @@ export default function WorkPage() {
         },
       });
     });
-
-    return () => ScrollTrigger.kill();
   }, []);
 
   return (
@@ -60,6 +41,7 @@ export default function WorkPage() {
               className={`workCard ${styles.card}`}
               onClick={() => window.location.href = `/projects/project-${i}`}
             >
+              <div className={styles.imagePlaceholder}>Bild {i}</div>
               <h3>Project {i}</h3>
               <p>Short description of project {i} here.</p>
             </div>
