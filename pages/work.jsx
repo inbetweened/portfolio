@@ -1,6 +1,6 @@
 import SeoHead from '../components/SeoHead';
 import Navbar from '../components/Navbar';
-import About from '../components/About';
+import About from '../components/Work';
 
 export default function AboutPage() {
   return (
