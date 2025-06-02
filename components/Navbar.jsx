@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
-import Link from 'next/link';
 import AnimatedLink from './AnimatedLink';
 import styles from '../styles/Navbar.module.css';
 
@@ -12,10 +11,10 @@ export default function Navbar() {
 
   useEffect(() => {
     if (menuOpen) {
-      // Slide in menu
+      // Slide menu in
       gsap.to(menuRef.current, { x: 0, duration: 0.5, ease: 'power3.out' });
 
-      // Animate links in
+      // Animate links
       gsap.fromTo(
         linksRef.current,
         { y: 30, opacity: 0 },
@@ -34,7 +33,7 @@ export default function Navbar() {
       gsap.to(burgerLines.current[1], { opacity: 0, duration: 0.3 });
       gsap.to(burgerLines.current[2], { rotate: -45, y: -8, duration: 0.3 });
     } else {
-      // Slide out menu
+      // Slide menu out
       gsap.to(menuRef.current, { x: '-100%', duration: 0.4, ease: 'power2.in' });
 
       // Reset burger
@@ -44,18 +43,12 @@ export default function Navbar() {
     }
   }, [menuOpen]);
 
-  const navItems = [
-    { name: 'Work', path: '/work' },
-    { name: 'About Me', path: '/about' },
-    { name: 'Contact', path: '/contact' },
-  ];
+  const navItems = ['Work', 'About Me', 'Contact'];
 
   return (
     <>
       <nav className={styles.nav}>
-        <Link href="/" className={styles.logo}>
-          Dani
-        </Link>
+        <div className={styles.logo}>Dani</div>
         <div className={styles.burger} onClick={() => setMenuOpen(!menuOpen)}>
           <div ref={(el) => (burgerLines.current[0] = el)} />
           <div ref={(el) => (burgerLines.current[1] = el)} />
@@ -66,12 +59,10 @@ export default function Navbar() {
       <div ref={menuRef} className={styles.menu}>
         <ul>
           {navItems.map((item, index) => (
-            <li key={item.name} ref={(el) => (linksRef.current[index] = el)}>
-              <Link href={item.path} passHref>
-                <AnimatedLink onClick={() => setMenuOpen(false)}>
-                  {item.name}
-                </AnimatedLink>
-              </Link>
+            <li key={item} ref={(el) => (linksRef.current[index] = el)}>
+              <AnimatedLink href={`#${item.replace(/ /g, '').toLowerCase()}`}>
+                {item}
+              </AnimatedLink>
             </li>
           ))}
         </ul>
