@@ -15,9 +15,9 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className={styles.hero}>
-      <h1 className={styles.title}>Hello World!</h1>
+      <h1 className={styles.title}>Creative Portfolio</h1>
       <p className={styles.subtitle}>
-        Subtitle smth smth
+        A showcase of my animation, design and development work.
       </p>
     </section>
   );
