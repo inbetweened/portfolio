@@ -1,13 +1,14 @@
-import SeoHead from '../components/SeoHead';
-import Navbar from '../components/Navbar';
-import About from '../components/About';
+import styles from '../styles/About.module.css';
 
-export default function AboutPage() {
+export default function About({ aboutRef }) {
   return (
-    <>
-      <SeoHead title="About Me – Daniel" description="Who I am and what drives my creative work." />
-      <Navbar />
-      <About />
-    </>
+    <section id="aboutme" ref={aboutRef} className={styles.about}>
+      <h2 className={styles.heading}>About Me</h2>
+      <p className={styles.text}>
+        I’m Daniel, a creative mind with a passion for animation, motion graphics
+        and interactive design. I love creating dynamic, visual stories that feel
+        alive.
+      </p>
+    </section>
   );
 }
