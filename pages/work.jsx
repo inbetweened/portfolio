@@ -7,35 +7,35 @@ import SeoHead from '../components/SeoHead';
 export default function WorkPage() {
   const cardsRef = useRef([]);
 
-useEffect(() => {
-  // Animation
-  gsap.fromTo(
-    cardsRef.current,
-    { x: 100, opacity: 0 },
-    {
-      x: 0,
-      opacity: 1,
-      stagger: 0.2,
-      duration: 0.8,
-      ease: 'power3.out',
-    }
-  );
+  useEffect(() => {
+    // Card Entrance Animation
+    gsap.fromTo(
+      cardsRef.current,
+      { x: 100, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: 'power3.out',
+      }
+    );
 
-  // Scroll-Umleitung von vertical → horizontal
-  const container = document.querySelector(`.${styles.scrollContainer}`);
-  const handleWheel = (e) => {
-    if (container) {
-      e.preventDefault();
-      container.scrollLeft += e.deltaY;
-    }
-  };
-  container.addEventListener('wheel', handleWheel);
+    // Global Horizontal Scroll via Wheel
+    const container = document.querySelector(`.${styles.scrollContainer}`);
+    const handleWheel = (e) => {
+      if (container) {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
+      }
+    };
 
-  return () => {
-    container.removeEventListener('wheel', handleWheel);
-  };
-}, []);
+    window.addEventListener('wheel', handleWheel, { passive: false });
 
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
 
   const projects = [
     { title: 'Projekt A', image: '/images/project-a.jpg' },
