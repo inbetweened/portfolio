@@ -1,9 +1,10 @@
 .workSection {
-  padding: 2rem;
+  padding: 4rem 2rem 2rem; /* oben mehr padding */
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
 }
+
 
 .scrollContainer {
   display: flex;
