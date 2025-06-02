@@ -1,84 +1,71 @@
+// pages/work.jsx
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import Navbar from '../components/Navbar';
 import styles from '../styles/Work.module.css';
-import { useRouter } from 'next/router';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function WorkPage() {
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
-  const router = useRouter();
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const sections = cardsRef.current;
-    const totalWidth = containerRef.current.scrollWidth - window.innerWidth;
+    // GSAP horizontales Scrollen
+    const sections = gsap.utils.toArray('.workCard');
+    const totalWidth = containerRef.current.scrollWidth;
 
     gsap.to(containerRef.current, {
-      x: () => `-${totalWidth}px`,
+      x: () => -(totalWidth - window.innerWidth),
       ease: 'none',
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
         end: () => `+=${totalWidth}`,
-        scrub: 1,
+        scrub: true,
         pin: true,
         anticipatePin: 1,
       },
     });
 
-    sections.forEach((card, i) => {
-      gsap.fromTo(
-        card,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          scrollTrigger: {
-            trigger: card,
-            containerAnimation: ScrollTrigger.getById('horizontal-scroll'),
-            start: 'left center',
-            toggleActions: 'play none none reset',
-          },
-        }
-      );
+    // Card-Animationen
+    cardsRef.current.forEach((card, i) => {
+      gsap.fromTo(card, {
+        opacity: 0,
+        y: 50,
+      }, {
+        opacity: 1,
+        y: 0,
+        delay: i * 0.2,
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 80%',
+        },
+      });
     });
+
+    return () => ScrollTrigger.kill();
   }, []);
 
-  const projects = [
-    {
-      title: 'Projekt Eins',
-      description: 'Beschreibung für Projekt Eins',
-      slug: 'projekt-eins',
-    },
-    {
-      title: 'Projekt Zwei',
-      description: 'Beschreibung für Projekt Zwei',
-      slug: 'projekt-zwei',
-    },
-    {
-      title: 'Projekt Drei',
-      description: 'Beschreibung für Projekt Drei',
-      slug: 'projekt-drei',
-    },
-  ];
-
   return (
-    <section className={styles.scrollWrapper}>
-      <div ref={containerRef} className={styles.horizontalScroll}>
-        {projects.map((project, i) => (
-          <div
-            key={project.slug}
-            className={styles.card}
-            ref={(el) => (cardsRef.current[i] = el)}
-            onClick={() => router.push(`/projects/${project.slug}`)}
-          >
-            <h3>{project.title}</h3>
-            <p>{project.description}</p>
-          </div>
-        ))}
+    <>
+      <Navbar />
+      <div className={styles.scrollContainerOuter}>
+        <div className={styles.scrollContainerInner} ref={containerRef}>
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              ref={(el) => (cardsRef.current[i] = el)}
+              className={`workCard ${styles.card}`}
+              onClick={() => window.location.href = `/projects/project-${i}`}
+            >
+              <h3>Project {i}</h3>
+              <p>Short description of project {i} here.</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </section>
+    </>
   );
 }
