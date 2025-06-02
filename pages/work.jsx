@@ -1,13 +1,13 @@
 import SeoHead from '../components/SeoHead';
 import Navbar from '../components/Navbar';
-import About from '../components/Work';
+import Work from '../components/Work'; // ⬅️ das ist der richtige Import!
 
-export default function AboutPage() {
+export default function WorkPage() {
   return (
     <>
-      <SeoHead title="About Me – Daniel" description="Who I am and what drives my creative work." />
+      <SeoHead title="Work – Daniel" description="A selection of my creative projects." />
       <Navbar />
-      <About />
+      <Work />
     </>
   );
 }
