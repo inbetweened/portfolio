@@ -56,3 +56,21 @@
   color: white;
   text-decoration: none;
 }
+
+.discoverButton {
+  margin-top: 2rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.discoverButton:hover {
+  transform: scale(1.05);
+}
+
