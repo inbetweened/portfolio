@@ -10,11 +10,8 @@
 .scrollContainer {
   display: flex;
   gap: 2rem;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+  overflow: visible;
+  width: fit-content;
 }
 
 .scrollContainer::-webkit-scrollbar {
