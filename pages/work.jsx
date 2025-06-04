@@ -12,37 +12,44 @@ export default function WorkPage() {
   const scrollContainerRef = useRef(null);
 
   useEffect(() => {
-    // GSAP animation for each card
-    if (cardsRef.current.length > 0) {
-      gsap.fromTo(
-        cardsRef.current,
-        { y: 100, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.2,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: scrollContainerRef.current,
-            start: 'top 80%',
-            scrub: false,
-          },
-        }
-      );
-    }
-
-    // Horizontal scroll with mousewheel
     const container = scrollContainerRef.current;
-    const handleWheel = (e) => {
-      if (container) {
-        e.preventDefault();
-        container.scrollLeft += e.deltaY * 2.5;
-      }
-    };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => window.removeEventListener('wheel', handleWheel);
+    if (!container) return;
+
+    const ctx = gsap.context(() => {
+      const scrollTween = gsap.to(container, {
+        x: () => -(container.scrollWidth - window.innerWidth),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: () => `+=${container.scrollWidth - window.innerWidth}`,
+          scrub: true,
+          pin: true,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      if (cardsRef.current.length > 0) {
+        gsap.fromTo(
+          cardsRef.current,
+          { y: 60, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.2,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+              containerAnimation: scrollTween,
+              start: 'left+=100 center',
+            },
+          }
+        );
+      }
+    }, container);
+
+    return () => ctx.revert();
   }, []);
 
   const projects = [
