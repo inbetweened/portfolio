@@ -230,7 +230,7 @@ export default function Home() {
         <div className={styles.header}>
           <div className={styles.title}>
             <h1>Work in Progress</h1>
-            <p>Website coming soon. Pull the line until it snaps.</p>
+            <p>Contact: hi@bydaniel.co </p>
           </div>
           <div className={styles.badge}>COMING SOON</div>
         </div>
